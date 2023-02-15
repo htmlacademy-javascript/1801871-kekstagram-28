@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Виктор Беленов](https://up.htmlacademy.ru/javascript/28/user/1801871).
-* Наставник: `Неизвестно`.
+* Наставник: [Мария Филиппова](https://htmlacademy.ru/profile/wonderjs).
 
 ---
 
