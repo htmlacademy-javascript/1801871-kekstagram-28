@@ -73,7 +73,19 @@ const addSymbol = (addableLength, symbols) => {
 const formatStringToPattern = (string, minLength, symbols) => (string.length >= minLength) ? string : addSymbol(minLength - string.length , symbols) + string;
 
 const formatStringToPatternPadStart = (string, minLength, symbols) => {
-  if ((minLength - string.length) % symbols.length) {
-    return string.padStart(minLength ,symbols);
+  const moduloLength = (minLength - string.length) % symbols.length;
+  if (moduloLength) {
+    return symbols.slice(0,moduloLength) + string.padStart(minLength - moduloLength,symbols);
   }
+  return string.padStart(minLength ,symbols);
 };
+
+isStringLengthCorrect();
+removesSpacesSplitJoin();
+isPalindrome();
+isPalindromeSplitReverseJoin();
+getNumberInString();
+getNumberInStringAdvanced();
+getNumberInStringRealAdvanced();
+formatStringToPattern();
+formatStringToPatternPadStart();
