@@ -48,8 +48,8 @@ const formatStringToPattern = (string, minLength, pattern) => {
   return getSymbol(pattern , minLength - string.length) + string;
 };
 
-isStringLengthCorrect();
-isPalindrome();
-getNumberInString();
-formatStringToPattern();
+// isStringLengthCorrect();
+// isPalindrome();
+// getNumberInString();
+// formatStringToPattern();
 
