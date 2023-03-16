@@ -27,12 +27,45 @@ const getId = () => {
   return id;
 };
 
-const getComments = () => {
- let commentsNumber = getRandomInteger(1,5);
+const NAMES = [
+  'Иван',
+  'Хуан Себастьян',
+  'Мария',
+  'Кристоф',
+  'Виктор',
+  'Юлия',
+  'Люпита',
+  'Вашингтон',
+];
+
+const MESSAGE = [
+  'Всё отлично!',
+  'В целом всё неплохо. Но не всё.',
+  'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
+  'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
+  'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
+  'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
+];
+
+const getComments = (number) => {
+  let id = 10;
+  const comments = [];
+  const getComment = () => {
+    id = id + getRandomInteger(1,100);
+    return {
+      id: id,
+      avatar: `img/avatar-${getRandomInteger(1,6)}.svg`,
+      message: MESSAGE[getRandomInteger(0,5)],
+      name: NAMES[getRandomInteger(0,7)],
+    };
+  };
+  for (let i = 0; i < number; i++) {
+    comments.push(getComment());
+  }
+  return comments;
 };
 
 const getRandomDescriptionPhoto = () => DESCRIPTIONS_PHOTO[getRandomInteger(0, 4)];
-
 
 
 const createPost = () => {
@@ -42,6 +75,10 @@ const createPost = () => {
     url: `photos/${id}.jpg`,
     description: getRandomDescriptionPhoto(),
     likes: getRandomInteger(15 , 150),
-    comments: getComments(),
+    comments: getComments(getRandomInteger(1,4)),
   };
 };
+
+const createPosts = (number) => (Array.from({length: number}, createPost));
+
+createPosts(25);
