@@ -44,20 +44,15 @@ const getRandomInteger = (a, b) => {
 
 const getRandomElement = (array) => (array[getRandomInteger(0, array.length)]);
 
+const getComment = () => ({
+  id: getRandomInteger(1,1000),
+  avatar: `img/avatar-${getRandomInteger(MIN_AVATAR_VALUE, MAX_AVATAR_VALUE)}.svg`,
+  message: getRandomElement(MESSAGES),
+  name: getRandomElement(NAMES),
+});
 
-const getComments = (number) => {
-  let id = 10;
-  const getComment = () => {
-    id = id + getRandomInteger(1,100);
-    return {
-      id: id,
-      avatar: `img/avatar-${getRandomInteger(MIN_AVATAR_VALUE, MAX_AVATAR_VALUE)}.svg`,
-      message: getRandomElement(MESSAGES),
-      name: getRandomElement(NAMES),
-    };
-  };
-  return Array.from({length:number}, getComment);
-};
+const getComments = (number) => (Array.from({length:number}, getComment));
+
 
 const createPost = (item, index) => {
   const id = index + 1;
