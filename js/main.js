@@ -1,32 +1,3 @@
-const getRandomInteger = (a, b) => {
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
-  const result = Math.random() * (upper - lower + 1) + lower;
-  return Math.floor(result);
-};
-
-const createListOfIds = () => {
-  const list = new Array(25);
-  let i = 1;
-  list.fill(1);
-  return list.map((element)=>{
-    element = i;
-    i++;
-    return element;
-  });
-};
-
-const LIST_OF_IDS = createListOfIds();
-
-const DESCRIPTIONS_PHOTO = ['Крутое фото горы', 'Крутое фото холма', 'Крутое фото дома', 'Крутое фото озера', 'Очень крутое фото кота'];
-
-const getId = () => {
-  const i = getRandomInteger(0, LIST_OF_IDS.length - 1);
-  const id = LIST_OF_IDS[i];
-  LIST_OF_IDS.splice(i, 1);
-  return id;
-};
-
 const NAMES = [
   'Иван',
   'Хуан Себастьян',
@@ -38,7 +9,7 @@ const NAMES = [
   'Вашингтон',
 ];
 
-const MESSAGE = [
+const MESSAGES = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -47,38 +18,60 @@ const MESSAGE = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
 
+const DESCRIPTIONS = ['Крутое фото горы', 'Крутое фото холма', 'Крутое фото дома', 'Крутое фото озера', 'Очень крутое фото кота'];
+
+const NUMBER_OF_POSTS = 25;
+
+const LIST_OF_IDS = Array.from({ length: NUMBER_OF_POSTS }, (v, k) => k + 1);
+
+const MIN_LIKES = 15;
+
+const MAX_LIKES = 150;
+
+const MIN_AVATAR_VALUE = 1;
+
+const MAX_AVATAR_VALUE = 6;
+
+const MIN_COMMENTS_AMOUNT = 1;
+
+const MAX_COMMENTS_AMOUNT = 4;
+
+const getRandomInteger = (a, b) => {
+  const lower = Math.ceil(Math.min(a, b));
+  const upper = Math.floor(Math.max(a, b));
+  const result = Math.random() * (upper - lower + 1) + lower;
+  return Math.floor(result);
+};
+
+
+const getRandomElement = (array) => (array[getRandomInteger(0, array.length)]);
+
+
 const getComments = (number) => {
   let id = 10;
-  const comments = [];
   const getComment = () => {
     id = id + getRandomInteger(1,100);
     return {
       id: id,
-      avatar: `img/avatar-${getRandomInteger(1,6)}.svg`,
-      message: MESSAGE[getRandomInteger(0,5)],
-      name: NAMES[getRandomInteger(0,7)],
+      avatar: `img/avatar-${getRandomInteger(MIN_AVATAR_VALUE, MAX_AVATAR_VALUE)}.svg`,
+      message: getRandomElement(MESSAGES),
+      name: getRandomElement(NAMES),
     };
   };
-  for (let i = 0; i < number; i++) {
-    comments.push(getComment());
-  }
-  return comments;
+  return Array.from({length:number}, getComment);
 };
 
-const getRandomDescriptionPhoto = () => DESCRIPTIONS_PHOTO[getRandomInteger(0, 4)];
-
-
 const createPost = () => {
-  const id = getId();
+  const id = LIST_OF_IDS.splice(getRandomInteger(0, NUMBER_OF_POSTS - 1), 1);
   return {
     id: id,
     url: `photos/${id}.jpg`,
-    description: getRandomDescriptionPhoto(),
-    likes: getRandomInteger(15 , 150),
-    comments: getComments(getRandomInteger(1,4)),
+    description: getRandomElement(DESCRIPTIONS),
+    likes: getRandomInteger(MIN_LIKES , MAX_LIKES),
+    comments: getComments(getRandomInteger(MIN_COMMENTS_AMOUNT, MAX_COMMENTS_AMOUNT)),
   };
 };
 
-const createPosts = (number) => (Array.from({length: number}, createPost));
+const createPosts = (amount) => (Array.from({length: amount}, createPost));
 
-createPosts(25);
+
