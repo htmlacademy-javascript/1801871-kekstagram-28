@@ -22,8 +22,6 @@ const DESCRIPTIONS = ['Крутое фото горы', 'Крутое фото �
 
 const NUMBER_OF_POSTS = 25;
 
-const LIST_OF_IDS = Array.from({ length: NUMBER_OF_POSTS }, (v, k) => k + 1);
-
 const MIN_LIKES = 15;
 
 const MAX_LIKES = 150;
@@ -61,8 +59,8 @@ const getComments = (number) => {
   return Array.from({length:number}, getComment);
 };
 
-const createPost = () => {
-  const id = LIST_OF_IDS.splice(getRandomInteger(0, NUMBER_OF_POSTS - 1), 1);
+const createPost = (item, index) => {
+  const id = index + 1;
   return {
     id: id,
     url: `photos/${id}.jpg`,
