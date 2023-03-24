@@ -1,5 +1,5 @@
 
-const createpicturesFragment = (posts) =>{
+const createPicturesFragment = (posts) =>{
   const pictureTemplate = document.querySelector('#picture');
   const picturesFragment = document.createDocumentFragment();
   posts.forEach((element) => {
@@ -13,4 +13,4 @@ const createpicturesFragment = (posts) =>{
   return picturesFragment;
 };
 
-export {createpicturesFragment};
+export {createPicturesFragment};
