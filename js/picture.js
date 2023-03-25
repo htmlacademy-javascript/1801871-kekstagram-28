@@ -12,8 +12,8 @@ const getPicture = (element) => {
 
 const getPicturesFragment = (posts) => {
   const fragment = document.createDocumentFragment();
-  posts.forEach((element)=>{
-    fragment.append(getPicture(element));
+  posts.forEach((post)=>{
+    fragment.append(getPicture(post));
   }
   );
   return fragment;
