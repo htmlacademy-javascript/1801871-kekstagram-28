@@ -11,12 +11,12 @@ const getPicture = (element) => {
 };
 
 const getPicturesFragment = (posts) => {
-  const picturesFragment = document.createDocumentFragment();
+  const fragment = document.createDocumentFragment();
   posts.forEach((element)=>{
-    picturesFragment.append(getPicture(element));
+    fragment.append(getPicture(element));
   }
   );
-  return picturesFragment;
+  return fragment;
 };
 
 export {getPicturesFragment};
