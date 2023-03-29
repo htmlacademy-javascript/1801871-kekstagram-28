@@ -58,3 +58,4 @@ const createPost = (item, index) => {
 const createPosts = (amount) => (Array.from({length: amount}, createPost));
 
 export {createPosts};
+
