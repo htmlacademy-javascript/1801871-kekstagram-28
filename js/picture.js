@@ -7,6 +7,7 @@ const getPicture = (element) => {
   pictureElement.querySelector('.picture__img').alt = element.description;
   pictureElement.querySelector('.picture__likes').textContent = element.likes;
   pictureElement.querySelector('.picture__comments').textContent = element.comments.length;
+  pictureElement.dataset.pictureId = element.id;
   return pictureElement;
 };
 
