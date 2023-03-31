@@ -4,6 +4,6 @@ const getRandomInteger = (a, b) => {
   const result = Math.random() * (upper - lower + 1) + lower;
   return Math.floor(result);
 };
-const getRandomElement = (array) => (array[getRandomInteger(0, array.length)]);
+const getRandomElement = (array) => (array[getRandomInteger(0, array.length - 1)]);
 
 export {getRandomInteger, getRandomElement};

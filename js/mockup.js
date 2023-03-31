@@ -32,7 +32,7 @@ const MAX_AVATAR_VALUE = 6;
 
 const MIN_COMMENTS_AMOUNT = 1;
 
-const MAX_COMMENTS_AMOUNT = 4;
+const MAX_COMMENTS_AMOUNT = 50;
 
 const getComment = () => ({
   id: getRandomInteger(1,1000),
@@ -58,3 +58,4 @@ const createPost = (item, index) => {
 const createPosts = (amount) => (Array.from({length: amount}, createPost));
 
 export {createPosts};
+
