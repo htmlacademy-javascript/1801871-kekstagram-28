@@ -6,6 +6,9 @@ const loadMoreCommentsButton = bigPicture.querySelector('.social__comments-loade
 const bigPictureCloseButton = document.querySelector('.big-picture__cancel');
 const body = document.querySelector('body');
 
+let socialComments = bigPicture.querySelectorAll('.social__comment');
+
+
 const bigPictureImg = bigPicture.querySelector('img');
 const bigPictureCaption = bigPicture.querySelector('.social__caption');
 const bigPictureLikesAmount = bigPicture.querySelector('.likes-count');
@@ -14,7 +17,6 @@ const commentsCurrentAmount = bigPicture.querySelector('.comment-count-first');
 
 const COMMENTS_PER_PORTION = 5;
 let commentShown = 0;
-const comments = [];
 
 
 const getCurrentPicture = (posts, evt) => {
@@ -26,28 +28,43 @@ const getCurrentPicture = (posts, evt) => {
 const getComment = (comment) => {
   const newComment = socialComment.cloneNode(true);
   const newCommentImg = newComment.querySelector('img');
+  newComment.classList.add('hidden');
   newCommentImg.src = comment.avatar;
   newCommentImg.alt = comment.name;
   newComment.querySelector('.social__text').textContent = comment.message;
   return newComment;
 };
 
+const addComments = (comments) => {
+  const fragment = document.createDocumentFragment();
+  comments.forEach((element) => {
+    fragment.append(getComment(element));
+  });
+  socialCommentList.innerHTML = '';
+  socialCommentList.append(fragment);
+  socialComments = bigPicture.querySelectorAll('.social__comment');
+};
 
 const renderComments = () => {
   commentShown += COMMENTS_PER_PORTION;
-  if (commentShown >= comments.length) {
-    commentShown = comments.length;
+  if (commentShown >= socialComments.length) {
+    commentShown = socialComments.length;
     loadMoreCommentsButton.classList.add('hidden');
   } else {
     loadMoreCommentsButton.classList.remove('hidden');
   }
-  const fragment = document.createDocumentFragment();
-  for (let i = 0; i < commentShown; i++) {
-    fragment.append(getComment(comments[i]));
-  }
-  socialCommentList.innerHTML = '';
-  socialCommentList.append(fragment);
+  const commentsNotShown = socialCommentList.querySelectorAll('.hidden');
+
   commentsCurrentAmount.textContent = commentShown;
+  if (commentsNotShown.length > 5) {
+    for (let i = 0; i < 5; i++) {
+      commentsNotShown[i].classList.remove('hidden');
+    }
+  } else {
+    for (let i = 0; i < commentsNotShown.length; i++) {
+      commentsNotShown[i].classList.remove('hidden');
+    }
+  }
 };
 
 const onLoadMoreButton = () => {
@@ -59,6 +76,7 @@ const renderBigPicture = (posts) => {
   bigPictureCaption.textContent = posts.description;
   bigPictureLikesAmount.textContent = posts.likes;
   bigPictureCommentsAmount.textContent = posts.comments.length;
+  addComments(posts.comments);
   renderComments();
 };
 
@@ -66,9 +84,7 @@ const renderBigPicture = (posts) => {
 const closeBigPicture = () => {
   bigPicture.classList.add('hidden');
   body.classList.remove('modal-open');
-  document.removeEventListener('keydown', onDocumentKeydown);
   commentShown = 0;
-  comments.length = 0;
 };
 
 const onCloseButton = () => {
@@ -76,22 +92,19 @@ const onCloseButton = () => {
 };
 
 
-function onDocumentKeydown (evt) {
+const onDocumentKeydown = function (evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    closeBigPicture();
+    closeBigPicture ();
   }
-}
+};
 
 const openBigPicture = (evt, posts) => {
-  evt.preventDefault();
   bigPicture.classList.remove('hidden');
   body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
 
   const picture = getCurrentPicture(posts, evt);
-
-  comments.push(...picture.comments);
   renderBigPicture(picture);
 };
 
@@ -100,4 +113,3 @@ loadMoreCommentsButton.addEventListener('click', onLoadMoreButton);
 bigPictureCloseButton.addEventListener('click', onCloseButton);
 
 export {openBigPicture, closeBigPicture};
-
