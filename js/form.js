@@ -48,7 +48,7 @@ const closeImgSetting = () => {
   imgUploadOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
-  fileInput.reset();
+  imgUploadForm.reset();
 };
 
 
