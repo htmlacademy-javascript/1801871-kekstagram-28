@@ -18,7 +18,7 @@ const pristine = new Pristine(imgUploadForm, {
 });
 
 const validateHashtag = (hashtag) => {
-  const regexp = /^#[a-zа-яё0-9]{1,19}$/i;
+  const regexp = /^#[a-zа-яё0-9]{1,20}$/i;
   return regexp.test(hashtag);
 };
 
@@ -33,7 +33,7 @@ const validateHashtags = (value) => {
 pristine.addValidator(hashtagField, validateHashtags, ERROR_TEXT);
 
 imgUploadForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
+  // evt.preventDefault();
   pristine.validate();
 });
 
