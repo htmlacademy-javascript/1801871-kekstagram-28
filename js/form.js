@@ -28,11 +28,11 @@ const validateHashtagAmount = (hashtags) => hashtags.length <= MAX_HASHTAG_AMOUN
 const validateUniqHashtag = (hashtags) => hashtags.length === new Set(hashtags).size;
 
 const validateHashtags = (value) => {
-  let tags = value.trim().toLowerCase();
-  if (tags.length === 0) {
+  const formattedString = value.trim().toLowerCase();
+  if (formattedString.length === 0) {
     return true;
   }
-  tags = tags.split(' ');
+  const tags = formattedString.split(' ');
   return validateHashtagAmount(tags) && tags.every(validateHashtag) && validateUniqHashtag(tags);
 };
 pristine.addValidator(hashtagField, validateHashtags, ERROR_TEXT);
