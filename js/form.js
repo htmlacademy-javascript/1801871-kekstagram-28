@@ -19,7 +19,7 @@ const pristine = new Pristine(imgUploadForm, {
 });
 
 const validateHashtag = (hashtag) => {
-  const regexp = /^#[a-zа-яё0-9]{1,20}$/i;
+  const regexp = /^#[a-zа-яё0-9]{1,19}$/i;
   return regexp.test(hashtag);
 };
 
@@ -29,22 +29,17 @@ const validateUniqHashtag = (hashtags) => hashtags.length === new Set(hashtags).
 
 const validateHashtags = (value) => {
   const tags = value.trim().toLowerCase().split(' ');
-  if(tags.length === 1 && tags[0] === '') {
+  if (tags.length === 1 && tags[0] === '') {
     tags.length = 0;
   }
-  console.log(tags);
-  console.log(`${validateHashtagAmount(tags) }validateHashtagAmount`);
-  console.log(`${tags.every(validateHashtag) }validateHashtag`);
-  console.log(tags.every(()=>false));
-  console.log(`${validateUniqHashtag(tags) }validateUniqHashtag(tags)`);
   return validateHashtagAmount(tags) && tags.every(validateHashtag) && validateUniqHashtag(tags);
 };
 pristine.addValidator(hashtagField, validateHashtags, ERROR_TEXT);
 
 imgUploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  const validete = pristine.validate();
-  if(validete) {
+  const isValid = pristine.validate();
+  if (isValid) {
     imgUploadForm.submit();
   }
 });
@@ -86,26 +81,3 @@ const onClickCancelButton = () => {
 
 fileInput.addEventListener('change', onChangeFileInput);
 imgUploadCancelButton.addEventListener('click', onClickCancelButton);
-
-// commentField.addEventListener('focus', () => {
-//   document.removeEventListener('keydown', onDocumentKeydown);
-// });
-// commentField.addEventListener('blur', () => {
-//   document.addEventListener('keydown', onDocumentKeydown);
-// });
-// hashtagField.addEventListener('focus', () => {
-//   document.removeEventListener('keydown', onDocumentKeydown);
-// });
-// hashtagField.addEventListener('blur', () => {
-//   document.addEventListener('keydown', onDocumentKeydown);
-// });
-
-
-// commentField.addEventListener('keydown', (evt) => {
-//   if (isEscapeKey(evt)) {
-//     console.log('Отменяем всплытие, капитан')
-//     evt.stopPropagation();
-//   }
-// });
-
-export{};
