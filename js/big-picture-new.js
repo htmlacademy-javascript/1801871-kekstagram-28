@@ -56,14 +56,14 @@ const renderComments = () => {
   const commentsNotShown = socialCommentList.querySelectorAll('.hidden');
 
   commentsCurrentAmount.textContent = commentShown;
-  if (commentsNotShown.length > 5) {
-    for (let i = 0; i < 5; i++) {
+  if (commentsNotShown.length > COMMENTS_PER_PORTION) {
+    for (let i = 0; i < COMMENTS_PER_PORTION; i++) {
       commentsNotShown[i].classList.remove('hidden');
     }
   } else {
-    for (let i = 0; i < commentsNotShown.length; i++) {
-      commentsNotShown[i].classList.remove('hidden');
-    }
+    commentsNotShown.forEach((element) => {
+      element.classList.remove('hidden');
+    });
   }
 };
 
