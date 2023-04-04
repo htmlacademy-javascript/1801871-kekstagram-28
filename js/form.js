@@ -28,12 +28,20 @@ const validateUniqHashtag = (hashtags) => hashtags.length === new Set(hashtags).
 
 const validateHashtags = (value) => {
   const tags = value.trim().toLowerCase().split(' ');
+  if(tags.length === 1 && tags[0] === '') {
+    tags.length = 0;
+  }
+  console.log(tags);
+  console.log(`${validateHashtagAmount(tags) }validateHashtagAmount`);
+  console.log(`${tags.every(validateHashtag) }validateHashtag`);
+  console.log(tags.every(()=>false));
+  console.log(`${validateUniqHashtag(tags) }validateUniqHashtag(tags)`);
   return validateHashtagAmount(tags) && tags.every(validateHashtag) && validateUniqHashtag(tags);
 };
 pristine.addValidator(hashtagField, validateHashtags, ERROR_TEXT);
 
 imgUploadForm.addEventListener('submit', (evt) => {
-  // evt.preventDefault();
+  evt.preventDefault();
   pristine.validate();
 });
 
