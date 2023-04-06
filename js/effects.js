@@ -1,12 +1,6 @@
-const SETTINGS = [
-  {
-    name: 'none',
-    min: 0,
-    max: 100,
-    step: 1,
-    units: 'none',
-    filter: 'none',
-  },
+import {getNumberInString} from './util.js';
+
+const EFFECTS = [
   {
     name: 'chrome',
     min: 0,
@@ -54,7 +48,8 @@ let currentSettings = '';
 
 const effectsList = document.querySelector('.effects__list');
 const slider = document.querySelector('.effect-level__slider');
-const picture = document.querySelector('.img-upload__preview').childNodes[1];
+const picture = document.querySelector('.img-upload__preview img');
+const sliderValue = document.querySelector('.effect-level__value');
 
 const hideSlider = () => {
   slider.classList.add('hidden');
@@ -96,17 +91,18 @@ const updateSlider = (settings) => {
     },
   });
 };
-const onUpdateSlider = () => {
+const onSliderUpdate = () => {
   picture.style.filter = slider.noUiSlider.get();
+  sliderValue.value = getNumberInString(slider.noUiSlider.get());
 };
 
-const onChangeEffect = (evt) => {
+const onEffectListChange = (evt) => {
   const currentRadio = evt.target.closest('input');
   if(currentRadio.value === 'none') {
     hideSlider();
   } else {
     showSlider();
-    currentSettings = SETTINGS.find((element)=>(element.name === currentRadio.value));
+    currentSettings = EFFECTS.find((element)=>(element.name === currentRadio.value));
     picture.className = `effects__preview--${currentSettings.name}`;
     updateSlider(currentSettings);
   }
@@ -117,7 +113,7 @@ const resetEfects = () => {
   hideSlider();
 };
 
-effectsList.addEventListener('change', onChangeEffect);
-slider.noUiSlider.on('update', onUpdateSlider);
+effectsList.addEventListener('change', onEffectListChange);
+slider.noUiSlider.on('update', onSliderUpdate);
 
 export {resetEfects};
