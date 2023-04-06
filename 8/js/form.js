@@ -30,7 +30,7 @@ const validateUniqHashtag = (hashtags) => hashtags.length === new Set(hashtags).
 
 const validateHashtags = (value) => {
   const formattedString = value.trim().toLowerCase();
-  if (formattedString) {
+  if (!formattedString) {
     return true;
   }
   const tags = formattedString.split(' ');
