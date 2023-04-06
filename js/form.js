@@ -1,5 +1,6 @@
 import {isEscapeKey} from './util.js';
 import {clearScale} from './scale.js';
+import {resetEfects} from './effects.js';
 
 const fileInput = document.querySelector('#upload-file');
 const imgUploadForm = document.querySelector('.img-upload__form');
@@ -58,6 +59,7 @@ const closeImgSetting = () => {
   document.removeEventListener('keydown', onDocumentKeydown);
   imgUploadForm.reset();
   clearScale();
+  resetEfects();
 };
 
 
