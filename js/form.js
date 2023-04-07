@@ -1,5 +1,6 @@
 import {isEscapeKey} from './util.js';
 import {clearScale} from './scale.js';
+import {resetEfects} from './effects.js';
 
 const fileInput = document.querySelector('#upload-file');
 const imgUploadForm = document.querySelector('.img-upload__form');
@@ -29,7 +30,7 @@ const validateUniqHashtag = (hashtags) => hashtags.length === new Set(hashtags).
 
 const validateHashtags = (value) => {
   const formattedString = value.trim().toLowerCase();
-  if (formattedString) {
+  if (!formattedString) {
     return true;
   }
   const tags = formattedString.split(' ');
@@ -58,6 +59,7 @@ const closeImgSetting = () => {
   document.removeEventListener('keydown', onDocumentKeydown);
   imgUploadForm.reset();
   clearScale();
+  resetEfects();
 };
 
 
