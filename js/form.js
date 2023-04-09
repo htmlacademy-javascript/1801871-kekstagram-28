@@ -62,14 +62,14 @@ function onNotErrorWindowClick (evt) {
     document.querySelector('.error').remove();
     body.removeEventListener('keydown', onAlertWindowKeydown, {once:true});
   }
-};
+}
 
 function onAlertWindowKeydown (evt) {
   if (isEscapeKey(evt)) {
     document.querySelector('.error').remove();
     body.removeEventListener('click', onNotErrorWindowClick, {once:true});
   }
-};
+}
 
 
 const showAlert = () => {
