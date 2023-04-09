@@ -1,18 +1,29 @@
 import {isEscapeKey} from './util.js';
 import {clearScale} from './scale.js';
 import {resetEfects} from './effects.js';
+import {sendData} from './api.js';
 
 const fileInput = document.querySelector('#upload-file');
 const imgUploadForm = document.querySelector('.img-upload__form');
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 const imgUploadCancelButton = document.querySelector('.img-upload__cancel');
+const imgUploadFormButton = document.querySelector('.img-upload__submit');
 const hashtagField = document.querySelector('.text__hashtags');
 const commentField = document.querySelector('.text__description');
 const body = document.querySelector('body');
 
+const errorTemplate = document.querySelector('#error').content.querySelector('.error');
+const successTemplate = document.querySelector('#success').content.querySelector('.success');
+
 const ERROR_TEXT = 'Ошибка валидации';
 const MAX_HASHTAG_AMOUNT = 5;
 
+const SubmitButtonText = {
+  POST: 'Опубликовать',
+  LOADING: 'Загружаю...'
+};
+
+let isSucces = '';
 
 const pristine = new Pristine(imgUploadForm, {
   classTo: 'img-upload__field-wrapper',
@@ -38,14 +49,70 @@ const validateHashtags = (value) => {
 };
 pristine.addValidator(hashtagField, validateHashtags, ERROR_TEXT);
 
-imgUploadForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  const isValid = pristine.validate();
-  if (isValid) {
-    imgUploadForm.submit();
-  }
-});
+const blockSubmitButton = () => {
+  imgUploadFormButton.disabled = true;
+  imgUploadFormButton.textContent = SubmitButtonText.LOADING;
+};
 
+const unBlockSubmitButton = () => {
+  imgUploadFormButton.disabled = false;
+  imgUploadFormButton.textContent = SubmitButtonText.POST;
+};
+
+function closePopup () {
+  if (isSucces) {
+    document.querySelector('.success__button').removeEventListener('click', oncloseButtonClick);
+    document.querySelector('.success').remove();
+  } else {
+    document.querySelector('.error__button').removeEventListener('click', oncloseButtonClick);
+    document.querySelector('.error').remove();
+  }
+  body.removeEventListener('click', onDocumentClick);
+  body.removeEventListener('keydown', onPopupWindowKeydown);
+}
+
+function onDocumentClick (evt) {
+  if (!evt.target.closest('.error__inner')){
+    closePopup();
+  }
+}
+
+function onPopupWindowKeydown (evt) {
+  if (isEscapeKey(evt)) {
+    closePopup();
+  }
+}
+
+function oncloseButtonClick () {
+  closePopup();
+}
+
+
+const showPopup = (template) => {
+  isSucces = (template === successTemplate);
+  const clone = template.cloneNode(true);
+  body.append(clone);
+  const closeButton = clone.querySelector('[type="button"]');
+  closeButton.addEventListener('click', oncloseButtonClick);
+  body.addEventListener('click', onDocumentClick);
+  body.addEventListener('keydown', onPopupWindowKeydown);
+};
+
+const setSubmiteForm = (onSuccess) => {
+  imgUploadForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockSubmitButton();
+      const data = new FormData(evt.target);
+      sendData(data)
+        .then(onSuccess)
+        .then(() => (showPopup(successTemplate)))
+        .catch(() => (showPopup(errorTemplate)))
+        .finally(unBlockSubmitButton);
+    }
+  });
+};
 
 const openImgSetting = () => {
   imgUploadOverlay.classList.remove('hidden');
@@ -60,6 +127,7 @@ const closeImgSetting = () => {
   imgUploadForm.reset();
   clearScale();
   resetEfects();
+  unBlockSubmitButton();
 };
 
 
@@ -84,3 +152,6 @@ const onClickCancelButton = () => {
 
 fileInput.addEventListener('change', onChangeFileInput);
 imgUploadCancelButton.addEventListener('click', onClickCancelButton);
+
+setSubmiteForm(closeImgSetting);
+

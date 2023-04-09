@@ -1,5 +1,12 @@
 import {getNumberInString} from './util.js';
 
+const DEFAULT_EFFCT = {
+  start: 10,
+  step: 10,
+  min: 0,
+  max: 100,
+};
+
 const EFFECTS = [
   {
     name: 'chrome',
@@ -60,12 +67,13 @@ const showSlider = () => {
 };
 
 noUiSlider.create(slider, {
-  start: 10,
-  step: 10,
+  start: DEFAULT_EFFCT.start,
+  step: DEFAULT_EFFCT.step,
   range: {
-    'min': 0,
-    'max': 100,
-  }
+    'min': DEFAULT_EFFCT.min,
+    'max': DEFAULT_EFFCT.max,
+  },
+  connect: 'lower',
 });
 
 const updateSlider = (settings) => {

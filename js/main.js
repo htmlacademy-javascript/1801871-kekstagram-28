@@ -1,15 +1,17 @@
-import {createPosts} from './mockup.js';
 import {renderPictures} from './picture.js';
+import {showAlert} from './util.js';
 import './form.js';
 import './scale.js';
 import './effects.js';
+import {getData} from './api.js';
+import './form.js';
 
-
-const NUMBER_OF_POSTS = 25;
-
-
-const posts = createPosts(NUMBER_OF_POSTS);
-
-renderPictures(posts);
+getData()
+  .then((response) => renderPictures(response))
+  .catch(
+    (err) => {
+      showAlert(err.message);
+    }
+  );
 
 
