@@ -57,15 +57,17 @@ const unBlockSubmitButton = () => {
   imgUploadFormButton.textContent = SubmitButtonText.IDLE;
 };
 
-const onNotErrorWindowClick = (evt) => {
-  if(!evt.target.closest('.error')){
+function onNotErrorWindowClick (evt) {
+  if(!evt.target.closest('.error__inner')){
     document.querySelector('.error').remove();
+    body.removeEventListener('keydown', onAlertWindowKeydown, {once:true});
   }
 };
 
-const onAlertWindowKeydown = (evt) => {
+function onAlertWindowKeydown (evt) {
   if (isEscapeKey(evt)) {
     document.querySelector('.error').remove();
+    body.removeEventListener('click', onNotErrorWindowClick, {once:true});
   }
 };
 
