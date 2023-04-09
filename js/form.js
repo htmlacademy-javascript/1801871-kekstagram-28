@@ -1,4 +1,4 @@
-import {isEscapeKey} from './util.js';
+import {isEscapeKey, showAlert} from './util.js';
 import {clearScale} from './scale.js';
 import {resetEfects} from './effects.js';
 import {sendData} from './api.js';
@@ -7,12 +7,18 @@ const fileInput = document.querySelector('#upload-file');
 const imgUploadForm = document.querySelector('.img-upload__form');
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 const imgUploadCancelButton = document.querySelector('.img-upload__cancel');
+const imgUploadFormButton = document.querySelector('.img-upload__submit');
 const hashtagField = document.querySelector('.text__hashtags');
 const commentField = document.querySelector('.text__description');
 const body = document.querySelector('body');
 
 const ERROR_TEXT = 'Ошибка валидации';
 const MAX_HASHTAG_AMOUNT = 5;
+
+const SubmitButtonText = {
+  IDLE: 'Опубликовать',
+  SENDING: 'Загружаю...'
+};
 
 
 const pristine = new Pristine(imgUploadForm, {
@@ -39,15 +45,34 @@ const validateHashtags = (value) => {
 };
 pristine.addValidator(hashtagField, validateHashtags, ERROR_TEXT);
 
-imgUploadForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  const isValid = pristine.validate();
-  if (isValid) {
-    const data = new FormData(evt.target);
-    sendData(data);
-  }
-});
+const blockSubmitButton = () => {
+  imgUploadFormButton.disabled = true;
+  imgUploadFormButton.textContent = SubmitButtonText.SENDING;
+};
 
+const unBlockSubmitButton = () => {
+  imgUploadFormButton.disabled = false;
+  imgUploadFormButton.textContent = SubmitButtonText.IDLE;
+};
+
+const setSubmiteForm = (onSuccess) => {
+  imgUploadForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockSubmitButton();
+      const data = new FormData(evt.target);
+      sendData(data)
+        .then(onSuccess)
+        .catch(
+          (err) => {
+            showAlert(err.message);
+          }
+        )
+        .finally(unBlockSubmitButton);
+    }
+  });
+};
 
 const openImgSetting = () => {
   imgUploadOverlay.classList.remove('hidden');
@@ -86,3 +111,5 @@ const onClickCancelButton = () => {
 
 fileInput.addEventListener('change', onChangeFileInput);
 imgUploadCancelButton.addEventListener('click', onClickCancelButton);
+
+export {setSubmiteForm, closeImgSetting};
