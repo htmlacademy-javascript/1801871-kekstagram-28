@@ -1,4 +1,4 @@
-import {isEscapeKey, showAlert} from './util.js';
+import {isEscapeKey} from './util.js';
 import {clearScale} from './scale.js';
 import {resetEfects} from './effects.js';
 import {sendData} from './api.js';
@@ -11,6 +11,8 @@ const imgUploadFormButton = document.querySelector('.img-upload__submit');
 const hashtagField = document.querySelector('.text__hashtags');
 const commentField = document.querySelector('.text__description');
 const body = document.querySelector('body');
+
+const errorTemplate = document.querySelector('#error').content.querySelector('.error');
 
 const ERROR_TEXT = 'Ошибка валидации';
 const MAX_HASHTAG_AMOUNT = 5;
@@ -53,6 +55,29 @@ const blockSubmitButton = () => {
 const unBlockSubmitButton = () => {
   imgUploadFormButton.disabled = false;
   imgUploadFormButton.textContent = SubmitButtonText.IDLE;
+};
+
+const onNotErrorWindowClick = (evt) => {
+  if(!evt.target.closest('.error')){
+    document.querySelector('.error').remove();
+  }
+};
+
+const onAlertWindowKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    document.querySelector('.error').remove();
+  }
+};
+
+
+const showAlert = () => {
+  body.append(errorTemplate.cloneNode(true));
+  const closeButton = document.querySelector('.error__button');
+  closeButton.addEventListener('click', ()=>{
+    document.querySelector('.error').remove();
+  });
+  body.addEventListener('click', onNotErrorWindowClick, {once:true});
+  body.addEventListener('keydown', onAlertWindowKeydown, {once:true});
 };
 
 const setSubmiteForm = (onSuccess) => {
