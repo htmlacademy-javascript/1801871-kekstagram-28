@@ -13,15 +13,17 @@ const commentField = document.querySelector('.text__description');
 const body = document.querySelector('body');
 
 const errorTemplate = document.querySelector('#error').content.querySelector('.error');
+const successTemplate = document.querySelector('#success').content.querySelector('.success');
 
 const ERROR_TEXT = 'Ошибка валидации';
 const MAX_HASHTAG_AMOUNT = 5;
 
 const SubmitButtonText = {
-  IDLE: 'Опубликовать',
-  SENDING: 'Загружаю...'
+  POST: 'Опубликовать',
+  LOADING: 'Загружаю...'
 };
 
+let isSucces = '';
 
 const pristine = new Pristine(imgUploadForm, {
   classTo: 'img-upload__field-wrapper',
@@ -49,37 +51,51 @@ pristine.addValidator(hashtagField, validateHashtags, ERROR_TEXT);
 
 const blockSubmitButton = () => {
   imgUploadFormButton.disabled = true;
-  imgUploadFormButton.textContent = SubmitButtonText.SENDING;
+  imgUploadFormButton.textContent = SubmitButtonText.LOADING;
 };
 
 const unBlockSubmitButton = () => {
   imgUploadFormButton.disabled = false;
-  imgUploadFormButton.textContent = SubmitButtonText.IDLE;
+  imgUploadFormButton.textContent = SubmitButtonText.POST;
 };
 
-function onNotErrorWindowClick (evt) {
-  if(!evt.target.closest('.error__inner')){
+function closePopup () {
+  if (isSucces) {
+    document.querySelector('.success__button').removeEventListener('click', oncloseButtonClick);
+    document.querySelector('.success').remove();
+  } else {
+    document.querySelector('.error__button').removeEventListener('click', oncloseButtonClick);
     document.querySelector('.error').remove();
-    body.removeEventListener('keydown', onAlertWindowKeydown, {once:true});
+  }
+  body.removeEventListener('click', onDocumentClick);
+  body.removeEventListener('keydown', onPopupWindowKeydown);
+}
+
+function onDocumentClick (evt) {
+  if (!evt.target.closest('.error__inner')){
+    closePopup();
   }
 }
 
-function onAlertWindowKeydown (evt) {
+function onPopupWindowKeydown (evt) {
   if (isEscapeKey(evt)) {
-    document.querySelector('.error').remove();
-    body.removeEventListener('click', onNotErrorWindowClick, {once:true});
+    closePopup();
   }
 }
 
+function oncloseButtonClick () {
+  closePopup();
+}
 
-const showAlert = () => {
-  body.append(errorTemplate.cloneNode(true));
-  const closeButton = document.querySelector('.error__button');
-  closeButton.addEventListener('click', ()=>{
-    document.querySelector('.error').remove();
-  });
-  body.addEventListener('click', onNotErrorWindowClick, {once:true});
-  body.addEventListener('keydown', onAlertWindowKeydown, {once:true});
+
+const showPopup = (template) => {
+  isSucces = (template === successTemplate);
+  const clone = template.cloneNode(true);
+  body.append(clone);
+  const closeButton = clone.querySelector('[type="button"]');
+  closeButton.addEventListener('click', oncloseButtonClick);
+  body.addEventListener('click', onDocumentClick);
+  body.addEventListener('keydown', onPopupWindowKeydown);
 };
 
 const setSubmiteForm = (onSuccess) => {
@@ -91,11 +107,8 @@ const setSubmiteForm = (onSuccess) => {
       const data = new FormData(evt.target);
       sendData(data)
         .then(onSuccess)
-        .catch(
-          (err) => {
-            showAlert(err.message);
-          }
-        )
+        .then(() => (showPopup(successTemplate)))
+        .catch(() => (showPopup(errorTemplate)))
         .finally(unBlockSubmitButton);
     }
   });
@@ -114,6 +127,7 @@ const closeImgSetting = () => {
   imgUploadForm.reset();
   clearScale();
   resetEfects();
+  unBlockSubmitButton();
 };
 
 
@@ -139,4 +153,5 @@ const onClickCancelButton = () => {
 fileInput.addEventListener('change', onChangeFileInput);
 imgUploadCancelButton.addEventListener('click', onClickCancelButton);
 
-export {setSubmiteForm, closeImgSetting};
+setSubmiteForm(closeImgSetting);
+

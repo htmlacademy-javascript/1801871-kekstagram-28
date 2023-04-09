@@ -1,6 +1,6 @@
 import {getNumberInString} from './util.js';
 
-const DEFAULT_EFFCTS = {
+const DEFAULT_EFFCT = {
   start: 10,
   step: 10,
   min: 0,
@@ -67,11 +67,11 @@ const showSlider = () => {
 };
 
 noUiSlider.create(slider, {
-  start: DEFAULT_EFFCTS.start,
-  step: DEFAULT_EFFCTS.step,
+  start: DEFAULT_EFFCT.start,
+  step: DEFAULT_EFFCT.step,
   range: {
-    'min': DEFAULT_EFFCTS.min,
-    'max': DEFAULT_EFFCTS.max,
+    'min': DEFAULT_EFFCT.min,
+    'max': DEFAULT_EFFCT.max,
   },
   connect: 'lower',
 });
