@@ -1,6 +1,7 @@
 import {isEscapeKey} from './util.js';
 import {clearScale} from './scale.js';
 import {resetEfects} from './effects.js';
+import {sendData} from './api.js';
 
 const fileInput = document.querySelector('#upload-file');
 const imgUploadForm = document.querySelector('.img-upload__form');
@@ -42,7 +43,8 @@ imgUploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   const isValid = pristine.validate();
   if (isValid) {
-    imgUploadForm.submit();
+    const data = new FormData(evt.target);
+    sendData(data);
   }
 });
 
