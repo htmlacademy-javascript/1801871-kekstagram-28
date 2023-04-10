@@ -4,8 +4,8 @@ import './form.js';
 import './scale.js';
 import './effects.js';
 import {getData} from './api.js';
-import './form.js';
 import {showFilterSelection, setFiltersListener} from './filters.js';
+
 
 const RERENDER_DELAY = 500;
 
