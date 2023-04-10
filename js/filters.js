@@ -33,8 +33,8 @@ const changeCurrentFilter = (element) => {
 const setFiltersListener = (pictures, renderPictures) => {
   filtersForm.addEventListener('click', (evt)=> {
     if (evt.target.closest('[type=button]')) {
-      clearPictures();
       changeCurrentFilter(evt.target.closest('[type=button]'));
+      clearPictures();
       switch (evt.target.closest('[type=button]')) {
         case filterDefault:
           renderPictures(pictures);
