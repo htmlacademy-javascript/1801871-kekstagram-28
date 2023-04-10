@@ -17,10 +17,6 @@ const filterOutRandom = (pictures) => pictures.slice(0,MAX_RANDOM).sort(() => Ma
 
 const filterOutDiscussed = (pictures) => pictures.slice().sort((a, b)=>b.comments.length - a.comments.length);
 
-const clearPictures = () => {
-  const pictures = document.querySelectorAll('.picture');
-  pictures.forEach((element) => element.remove());
-};
 
 const changeCurrentFilter = (element) => {
   filterDefault.classList.remove('img-filters__button--active');
@@ -34,7 +30,6 @@ const setFiltersListener = (pictures, renderPictures) => {
   filtersForm.addEventListener('click', (evt)=> {
     if (evt.target.closest('[type=button]')) {
       changeCurrentFilter(evt.target.closest('[type=button]'));
-      clearPictures();
       switch (evt.target.closest('[type=button]')) {
         case filterDefault:
           renderPictures(pictures);
@@ -51,3 +46,4 @@ const setFiltersListener = (pictures, renderPictures) => {
 };
 
 export {showFilterSelection, setFiltersListener};
+
