@@ -3,6 +3,8 @@ import {clearScale} from './scale.js';
 import {resetEfects} from './effects.js';
 import {sendData} from './api.js';
 
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+
 const fileInput = document.querySelector('#upload-file');
 const imgUploadForm = document.querySelector('.img-upload__form');
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
@@ -11,6 +13,7 @@ const imgUploadFormButton = document.querySelector('.img-upload__submit');
 const hashtagField = document.querySelector('.text__hashtags');
 const commentField = document.querySelector('.text__description');
 const body = document.querySelector('body');
+const preview = document.querySelector('.img-upload__preview img');
 
 const errorTemplate = document.querySelector('#error').content.querySelector('.error');
 const successTemplate = document.querySelector('#success').content.querySelector('.success');
@@ -114,7 +117,19 @@ const setSubmiteForm = (onSuccess) => {
   });
 };
 
+const changeForUploadImg = () => {
+  const file = fileInput.files[0];
+  const fileName = file.name.toLowerCase();
+
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+
+  if (matches) {
+    preview.src = URL.createObjectURL(file);
+  }
+};
+
 const openImgSetting = () => {
+  changeForUploadImg();
   imgUploadOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);

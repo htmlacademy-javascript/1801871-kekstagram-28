@@ -3,6 +3,11 @@ const pictureContainer = document.querySelector('.pictures');
 import {openBigPicture} from './big-picture.js';
 
 
+const clearPictures = () => {
+  const pictures = document.querySelectorAll('.picture');
+  pictures.forEach((element) => element.remove());
+};
+
 const getPicture = (element) => {
   const pictureElement = pictureTemplate.cloneNode(true);
   const PictureElementImg = pictureElement.querySelector('.picture__img');
@@ -15,6 +20,7 @@ const getPicture = (element) => {
 };
 
 const renderPictures = (posts) => {
+  clearPictures();
   const fragment = document.createDocumentFragment();
   posts.forEach((post)=>{
     fragment.append(getPicture(post));
