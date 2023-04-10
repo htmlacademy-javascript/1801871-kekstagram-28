@@ -107,6 +107,8 @@ const onSliderUpdate = () => {
 const onEffectListChange = (evt) => {
   const currentRadio = evt.target.closest('input');
   if(currentRadio.value === 'none') {
+    picture.className = '';
+    picture.style.filter = '';
     hideSlider();
   } else {
     showSlider();
