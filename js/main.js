@@ -5,13 +5,16 @@ import './scale.js';
 import './effects.js';
 import {getData} from './api.js';
 import './form.js';
+import {showFilterSelection, setFiltersListener} from './filters.js';
+
 
 getData()
-  .then((response) => renderPictures(response))
+  .then((resolve) => setFiltersListener(resolve, renderPictures))
+  .then(renderPictures)
+  .then(showFilterSelection)
   .catch(
     (err) => {
       showAlert(err.message);
     }
   );
-
 
