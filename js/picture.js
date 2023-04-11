@@ -27,7 +27,10 @@ const renderPictures = (posts) => {
   }
   );
   pictureContainer.append(fragment);
+  return posts;
+};
 
+const setOpenBigPictureListener = (posts) => {
   pictureContainer.addEventListener('click', (evt) => {
     if (evt.target.closest('.picture')) {
       openBigPicture(evt, posts);
@@ -35,5 +38,4 @@ const renderPictures = (posts) => {
   }
   );
 };
-
-export {renderPictures};
+export {renderPictures, setOpenBigPictureListener};

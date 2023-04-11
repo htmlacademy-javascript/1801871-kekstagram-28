@@ -1,4 +1,4 @@
-import {renderPictures} from './picture.js';
+import {renderPictures, setOpenBigPictureListener} from './picture.js';
 import {showAlert, debounce} from './util.js';
 import './form.js';
 import './scale.js';
@@ -12,6 +12,7 @@ const RERENDER_DELAY = 500;
 getData()
   .then((resolve) => setFiltersListener(resolve, debounce(renderPictures,RERENDER_DELAY)))
   .then(renderPictures)
+  .then(setOpenBigPictureListener)
   .then(showFilterSelection)
   .catch(
     (err) => {
