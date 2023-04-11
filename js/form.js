@@ -28,6 +28,7 @@ const SubmitButtonText = {
 
 let isSucces = '';
 
+
 const pristine = new Pristine(imgUploadForm, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
@@ -71,7 +72,8 @@ function closePopup () {
     document.querySelector('.error').remove();
   }
   body.removeEventListener('click', onDocumentClick);
-  body.removeEventListener('keydown', onPopupWindowKeydown);
+  document.removeEventListener('keydown', onPopupWindowKeydown);
+  document.addEventListener('keydown', onDocumentKeydown);
 }
 
 function onDocumentClick (evt) {
@@ -98,7 +100,8 @@ const showPopup = (template) => {
   const closeButton = clone.querySelector('[type="button"]');
   closeButton.addEventListener('click', oncloseButtonClick);
   body.addEventListener('click', onDocumentClick);
-  body.addEventListener('keydown', onPopupWindowKeydown);
+  document.addEventListener('keydown', onPopupWindowKeydown);
+  document.removeEventListener('keydown', onDocumentKeydown);
 };
 
 const setSubmiteForm = (onSuccess) => {
@@ -146,9 +149,11 @@ const closeImgSetting = () => {
 };
 
 
-const isTextFieldFocused = () => (document.activeElement === hashtagField || document.activeElement === commentField);
+const isTextFieldFocused = () => document.activeElement === hashtagField || document.activeElement === commentField;
+
 
 function onDocumentKeydown (evt) {
+
   if (isEscapeKey(evt) && !isTextFieldFocused()) {
     evt.preventDefault();
     closeImgSetting();
