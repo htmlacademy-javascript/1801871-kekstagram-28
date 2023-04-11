@@ -149,7 +149,7 @@ const closeImgSetting = () => {
 const isTextFieldFocused = () => (document.activeElement === hashtagField || document.activeElement === commentField);
 
 function onDocumentKeydown (evt) {
-  if (isEscapeKey(evt) && !isTextFieldFocused) {
+  if (isEscapeKey(evt) && !isTextFieldFocused()) {
     evt.preventDefault();
     closeImgSetting();
   }

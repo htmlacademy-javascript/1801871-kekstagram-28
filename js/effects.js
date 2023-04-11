@@ -55,15 +55,16 @@ let currentSettings = '';
 
 const effectsList = document.querySelector('.effects__list');
 const slider = document.querySelector('.effect-level__slider');
+const sliderContainer = document.querySelector('.img-upload__effect-level');
 const picture = document.querySelector('.img-upload__preview img');
 const sliderValue = document.querySelector('.effect-level__value');
 
 const hideSlider = () => {
-  slider.classList.add('hidden');
+  sliderContainer.classList.add('hidden');
 };
 hideSlider();
 const showSlider = () => {
-  slider.classList.remove('hidden');
+  sliderContainer.classList.remove('hidden');
 };
 
 noUiSlider.create(slider, {
