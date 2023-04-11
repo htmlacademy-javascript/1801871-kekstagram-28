@@ -1,7 +1,7 @@
-const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
-const pictureContainer = document.querySelector('.pictures');
 import {openBigPicture} from './big-picture.js';
 
+const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
+const pictureContainer = document.querySelector('.pictures');
 
 const clearPictures = () => {
   const pictures = document.querySelectorAll('.picture');
