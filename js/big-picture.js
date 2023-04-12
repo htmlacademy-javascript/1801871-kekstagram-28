@@ -1,4 +1,4 @@
-import {isEscapeKey} from './util.js';
+import {isEscapeKey, body} from './util.js';
 
 const bigPicture = document.querySelector('.big-picture');
 
@@ -12,7 +12,7 @@ const bigPictureCommentsAmount = bigPicture.querySelector('.comments-count');
 const commentsCurrentAmount = bigPicture.querySelector('.comment-count-first');
 
 const bigPictureCloseButton = document.querySelector('.big-picture__cancel');
-const body = document.querySelector('body');
+
 
 const COMMENTS_PER_PORTION = 5;
 

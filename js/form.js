@@ -1,4 +1,4 @@
-import {isEscapeKey} from './util.js';
+import {isEscapeKey, body, preview} from './util.js';
 import {clearScale} from './scale.js';
 import {resetEfects} from './effects.js';
 import {sendData} from './api.js';
@@ -19,10 +19,6 @@ const imgUploadFormButton = document.querySelector('.img-upload__submit');
 
 const hashtagField = document.querySelector('.text__hashtags');
 const commentField = document.querySelector('.text__description');
-
-const body = document.querySelector('body');
-
-const preview = document.querySelector('.img-upload__preview img');
 
 const errorTemplate = document.querySelector('#error').content.querySelector('.error');
 const successTemplate = document.querySelector('#success').content.querySelector('.success');

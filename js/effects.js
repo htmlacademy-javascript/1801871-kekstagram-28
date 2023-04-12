@@ -1,4 +1,4 @@
-import {getNumberInString} from './util.js';
+import {getNumberInString, preview} from './util.js';
 
 const DEFAULT_EFFECT = {
   start: 100,
@@ -56,7 +56,6 @@ let currentSettings = '';
 const effectsList = document.querySelector('.effects__list');
 const slider = document.querySelector('.effect-level__slider');
 const sliderContainer = document.querySelector('.img-upload__effect-level');
-const picture = document.querySelector('.img-upload__preview img');
 const sliderValue = document.querySelector('.effect-level__value');
 
 const hideSlider = () => {
@@ -101,26 +100,26 @@ const updateSlider = (settings) => {
   });
 };
 const onSliderUpdate = () => {
-  picture.style.filter = slider.noUiSlider.get();
+  preview.style.filter = slider.noUiSlider.get();
   sliderValue.value = getNumberInString(slider.noUiSlider.get());
 };
 
 const onEffectListChange = (evt) => {
   const currentRadio = evt.target.closest('input');
   if(currentRadio.value === 'none') {
-    picture.className = '';
-    picture.style.filter = '';
+    preview.className = '';
+    preview.style.filter = '';
     hideSlider();
   } else {
     showSlider();
     currentSettings = EFFECTS.find((element)=>(element.name === currentRadio.value));
-    picture.className = `effects__preview--${currentSettings.name}`;
+    preview.className = `effects__preview--${currentSettings.name}`;
     updateSlider(currentSettings);
   }
 };
 const resetEfects = () => {
-  picture.className = '';
-  picture.style.filter = '';
+  preview.className = '';
+  preview.style.filter = '';
   hideSlider();
 };
 
