@@ -27,7 +27,6 @@ const renderPictures = (posts) => {
   }
   );
   pictureContainer.append(fragment);
-  return posts;
 };
 
 const setOpenBigPictureListener = (posts) => {

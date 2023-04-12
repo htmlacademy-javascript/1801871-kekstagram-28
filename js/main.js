@@ -11,9 +11,11 @@ const RERENDER_DELAY = 500;
 
 getData()
   .then((resolve) => setFiltersListener(resolve, debounce(renderPictures,RERENDER_DELAY)))
-  .then(renderPictures)
-  .then(setOpenBigPictureListener)
-  .then(showFilterSelection)
+  .then((posts)=> {
+    renderPictures(posts);
+    setOpenBigPictureListener(posts);
+    showFilterSelection();
+  })
   .catch(
     (err) => {
       showAlert(err.message);
