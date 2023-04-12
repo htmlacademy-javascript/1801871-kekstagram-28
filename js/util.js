@@ -6,8 +6,6 @@ const preview = document.querySelector('.img-upload__preview img');
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-const isEnterKey = (evt) => evt.key === 'Enter';
-
 const getNumberInString = (numberString) => {
   const formattedString = numberString.toString().replaceAll(/[a-z()%]/g, '');
   return formattedString ? Number(formattedString) : NaN;
@@ -44,4 +42,4 @@ function debounce (callback, timeoutDelay = 500) {
   };
 }
 
-export {isEscapeKey, isEnterKey, getNumberInString, showAlert, debounce, body, preview};
+export {isEscapeKey, getNumberInString, showAlert, debounce, body, preview};

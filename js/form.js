@@ -9,6 +9,11 @@ const ERROR_TEXT = 'Ошибка валидации';
 
 const MAX_HASHTAG_AMOUNT = 5;
 
+const SubmitButtonText = {
+  POST: 'Опубликовать',
+  LOADING: 'Загружаю...'
+};
+
 
 const fileInput = document.querySelector('#upload-file');
 
@@ -23,12 +28,8 @@ const commentField = document.querySelector('.text__description');
 const errorTemplate = document.querySelector('#error').content.querySelector('.error');
 const successTemplate = document.querySelector('#success').content.querySelector('.success');
 
-const SubmitButtonText = {
-  POST: 'Опубликовать',
-  LOADING: 'Загружаю...'
-};
 
-let isSucces = '';
+let isSuccess = '';
 
 
 const pristine = new Pristine(imgUploadForm, {
@@ -66,7 +67,7 @@ const unBlockSubmitButton = () => {
 };
 
 function closePopup () {
-  if (isSucces) {
+  if (isSuccess) {
     document.querySelector('.success__button').removeEventListener('click', oncloseButtonClick);
     document.querySelector('.success').remove();
   } else {
@@ -96,7 +97,7 @@ function oncloseButtonClick () {
 
 
 const showPopup = (template) => {
-  isSucces = (template === successTemplate);
+  isSuccess = (template === successTemplate);
   const clone = template.cloneNode(true);
   body.append(clone);
   const closeButton = clone.querySelector('[type="button"]');
@@ -106,7 +107,7 @@ const showPopup = (template) => {
   document.removeEventListener('keydown', onDocumentKeydown);
 };
 
-const setSubmiteForm = (onSuccess) => {
+const setSubmitForm = (onSuccess) => {
   imgUploadForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
     const isValid = pristine.validate();
@@ -175,5 +176,5 @@ const onClickCancelButton = () => {
 fileInput.addEventListener('change', onChangeFileInput);
 imgUploadCancelButton.addEventListener('click', onClickCancelButton);
 
-setSubmiteForm(closeImgSetting);
+setSubmitForm(closeImgSetting);
 
