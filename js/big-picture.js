@@ -1,5 +1,7 @@
 import {isEscapeKey} from './util.js';
 
+const COMMENTS_PER_PORTION = 5;
+
 const bigPicture = document.querySelector('.big-picture');
 
 const socialComment = bigPicture.querySelector('.social__comment');
@@ -13,8 +15,6 @@ const commentsCurrentAmount = bigPicture.querySelector('.comment-count-first');
 
 const bigPictureCloseButton = document.querySelector('.big-picture__cancel');
 const body = document.querySelector('body');
-
-const COMMENTS_PER_PORTION = 5;
 
 let commentShown = 0;
 
