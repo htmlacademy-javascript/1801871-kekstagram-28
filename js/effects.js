@@ -1,7 +1,7 @@
 import {getNumberInString} from './util.js';
 
 const DEFAULT_EFFECT = {
-  start: 10,
+  start: 100,
   step: 10,
   min: 0,
   max: 100,
