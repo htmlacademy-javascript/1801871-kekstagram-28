@@ -10,8 +10,8 @@ import {showFilterSelection, setFiltersListener} from './filters.js';
 const RERENDER_DELAY = 500;
 
 getData()
-  .then((resolve) => setFiltersListener(resolve, debounce(renderPictures,RERENDER_DELAY)))
   .then((posts)=> {
+    setFiltersListener(posts, debounce(renderPictures,RERENDER_DELAY));
     renderPictures(posts);
     setOpenBigPictureListener(posts);
     showFilterSelection();
