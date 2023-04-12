@@ -1,7 +1,6 @@
+const MAX_RANDOM = 10;
 
 const filterSelection = document.querySelector('.img-filters');
-
-const MAX_RANDOM = 10;
 
 const filtersForm = document.querySelector('.img-filters__form');
 

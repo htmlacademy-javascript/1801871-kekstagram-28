@@ -1,19 +1,23 @@
 import {isEscapeKey} from './util.js';
+
 const bigPicture = document.querySelector('.big-picture');
+
 const socialComment = bigPicture.querySelector('.social__comment');
 const socialCommentList = bigPicture.querySelector('.social__comments');
 const loadMoreCommentsButton = bigPicture.querySelector('.social__comments-loader');
-const bigPictureCloseButton = document.querySelector('.big-picture__cancel');
-const body = document.querySelector('body');
-
 const bigPictureImg = bigPicture.querySelector('img');
 const bigPictureCaption = bigPicture.querySelector('.social__caption');
 const bigPictureLikesAmount = bigPicture.querySelector('.likes-count');
 const bigPictureCommentsAmount = bigPicture.querySelector('.comments-count');
 const commentsCurrentAmount = bigPicture.querySelector('.comment-count-first');
 
+const bigPictureCloseButton = document.querySelector('.big-picture__cancel');
+const body = document.querySelector('body');
+
 const COMMENTS_PER_PORTION = 5;
+
 let commentShown = 0;
+
 const comments = [];
 
 
@@ -50,7 +54,7 @@ const renderComments = () => {
   commentsCurrentAmount.textContent = commentShown;
 };
 
-const onLoadMoreButton = () => {
+const onLoadMoreButtonClick = () => {
   renderComments();
 };
 
@@ -71,7 +75,7 @@ const closeBigPicture = () => {
   comments.length = 0;
 };
 
-const onCloseButton = () => {
+const onCloseButtonClick = () => {
   closeBigPicture();
 };
 
@@ -95,9 +99,9 @@ const openBigPicture = (evt, posts) => {
   renderBigPicture(picture);
 };
 
-loadMoreCommentsButton.addEventListener('click', onLoadMoreButton);
+loadMoreCommentsButton.addEventListener('click', onLoadMoreButtonClick);
 
-bigPictureCloseButton.addEventListener('click', onCloseButton);
+bigPictureCloseButton.addEventListener('click', onCloseButtonClick);
 
 export {openBigPicture, closeBigPicture};
 

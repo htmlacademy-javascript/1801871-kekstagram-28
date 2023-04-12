@@ -1,6 +1,6 @@
 import {getNumberInString} from './util.js';
 
-const DEFAULT_EFFCT = {
+const DEFAULT_EFFECT = {
   start: 10,
   step: 10,
   min: 0,
@@ -55,23 +55,24 @@ let currentSettings = '';
 
 const effectsList = document.querySelector('.effects__list');
 const slider = document.querySelector('.effect-level__slider');
+const sliderContainer = document.querySelector('.img-upload__effect-level');
 const picture = document.querySelector('.img-upload__preview img');
 const sliderValue = document.querySelector('.effect-level__value');
 
 const hideSlider = () => {
-  slider.classList.add('hidden');
+  sliderContainer.classList.add('hidden');
 };
 hideSlider();
 const showSlider = () => {
-  slider.classList.remove('hidden');
+  sliderContainer.classList.remove('hidden');
 };
 
 noUiSlider.create(slider, {
-  start: DEFAULT_EFFCT.start,
-  step: DEFAULT_EFFCT.step,
+  start: DEFAULT_EFFECT.start,
+  step: DEFAULT_EFFECT.step,
   range: {
-    'min': DEFAULT_EFFCT.min,
-    'max': DEFAULT_EFFCT.max,
+    'min': DEFAULT_EFFECT.min,
+    'max': DEFAULT_EFFECT.max,
   },
   connect: 'lower',
 });
@@ -107,6 +108,8 @@ const onSliderUpdate = () => {
 const onEffectListChange = (evt) => {
   const currentRadio = evt.target.closest('input');
   if(currentRadio.value === 'none') {
+    picture.className = '';
+    picture.style.filter = '';
     hideSlider();
   } else {
     showSlider();
