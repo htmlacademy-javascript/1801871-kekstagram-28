@@ -1,5 +1,9 @@
 const ALERT_SHOW_TIME = 5000;
 
+const body = document.querySelector('body');
+
+const preview = document.querySelector('.img-upload__preview img');
+
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
 const getNumberInString = (numberString) => {
@@ -38,4 +42,4 @@ function debounce (callback, timeoutDelay = 500) {
   };
 }
 
-export {isEscapeKey, getNumberInString, showAlert, debounce};
+export {isEscapeKey, getNumberInString, showAlert, debounce, body, preview};

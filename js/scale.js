@@ -8,7 +8,7 @@ const Scale = {
 const scaleSmallerButton = document.querySelector('.scale__control--smaller');
 const scaleBiggerButton = document.querySelector('.scale__control--bigger');
 const scaleValue = document.querySelector('.scale__control--value');
-const scaleImg = document.querySelector('.img-upload__preview');
+const scaleImg = document.querySelector('.img-upload__preview img');
 
 const onBiggerButtonClick = () => {
   const scaleValueInt = +scaleValue.value.slice(0, -1);
