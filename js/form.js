@@ -1,6 +1,6 @@
 import {isEscapeKey, body, preview} from './util.js';
 import {clearScale} from './scale.js';
-import {resetEfects} from './effects.js';
+import {resetEffects} from './effects.js';
 import {sendData} from './api.js';
 
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
@@ -143,8 +143,9 @@ const closeImgSetting = () => {
   document.removeEventListener('keydown', onDocumentKeydown);
   imgUploadForm.reset();
   clearScale();
-  resetEfects();
+  resetEffects();
   toggleSubmitButton();
+  pristine.reset();
 };
 
 
