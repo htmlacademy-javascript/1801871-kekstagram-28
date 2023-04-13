@@ -1,6 +1,6 @@
 import {isEscapeKey, body, preview} from './util.js';
 import {clearScale} from './scale.js';
-import {resetEfects} from './effects.js';
+import {resetEffects} from './effects.js';
 import {sendData} from './api.js';
 
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
@@ -11,9 +11,8 @@ const MAX_HASHTAG_AMOUNT = 5;
 
 const SubmitButtonText = {
   POST: 'Опубликовать',
-  LOADING: 'Загружаю...'
+  LOADING: 'Загружаю...',
 };
-
 
 const fileInput = document.querySelector('#upload-file');
 
@@ -25,11 +24,12 @@ const imgUploadFormButton = document.querySelector('.img-upload__submit');
 const hashtagField = document.querySelector('.text__hashtags');
 const commentField = document.querySelector('.text__description');
 
+
 const errorTemplate = document.querySelector('#error').content.querySelector('.error');
 const successTemplate = document.querySelector('#success').content.querySelector('.success');
 
 
-let isSuccess = '';
+let isSucces = '';
 
 
 const pristine = new Pristine(imgUploadForm, {
@@ -56,18 +56,14 @@ const validateHashtags = (value) => {
 };
 pristine.addValidator(hashtagField, validateHashtags, ERROR_TEXT);
 
-const blockSubmitButton = () => {
-  imgUploadFormButton.disabled = true;
-  imgUploadFormButton.textContent = SubmitButtonText.LOADING;
-};
 
-const unBlockSubmitButton = () => {
-  imgUploadFormButton.disabled = false;
-  imgUploadFormButton.textContent = SubmitButtonText.POST;
+const toggleSubmitButton = (disabled = false) => {
+  imgUploadFormButton.disabled = disabled;
+  imgUploadFormButton.textContent = disabled ? SubmitButtonText.LOADING : SubmitButtonText.POST;
 };
 
 function closePopup () {
-  if (isSuccess) {
+  if (isSucces) {
     document.querySelector('.success__button').removeEventListener('click', oncloseButtonClick);
     document.querySelector('.success').remove();
   } else {
@@ -97,7 +93,7 @@ function oncloseButtonClick () {
 
 
 const showPopup = (template) => {
-  isSuccess = (template === successTemplate);
+  isSucces = (template === successTemplate);
   const clone = template.cloneNode(true);
   body.append(clone);
   const closeButton = clone.querySelector('[type="button"]');
@@ -107,18 +103,18 @@ const showPopup = (template) => {
   document.removeEventListener('keydown', onDocumentKeydown);
 };
 
-const setSubmitForm = (onSuccess) => {
+const setSubmiteForm = (onSuccess) => {
   imgUploadForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
     const isValid = pristine.validate();
     if (isValid) {
-      blockSubmitButton();
+      toggleSubmitButton(true);
       const data = new FormData(evt.target);
       sendData(data)
         .then(onSuccess)
         .then(() => (showPopup(successTemplate)))
         .catch(() => (showPopup(errorTemplate)))
-        .finally(unBlockSubmitButton);
+        .finally(toggleSubmitButton);
     }
   });
 };
@@ -147,8 +143,9 @@ const closeImgSetting = () => {
   document.removeEventListener('keydown', onDocumentKeydown);
   imgUploadForm.reset();
   clearScale();
-  resetEfects();
-  unBlockSubmitButton();
+  resetEffects();
+  toggleSubmitButton();
+  pristine.reset();
 };
 
 
@@ -176,5 +173,5 @@ const onClickCancelButton = () => {
 fileInput.addEventListener('change', onChangeFileInput);
 imgUploadCancelButton.addEventListener('click', onClickCancelButton);
 
-setSubmitForm(closeImgSetting);
+setSubmiteForm(closeImgSetting);
 
