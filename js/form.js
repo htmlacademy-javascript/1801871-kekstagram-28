@@ -29,7 +29,7 @@ const errorTemplate = document.querySelector('#error').content.querySelector('.e
 const successTemplate = document.querySelector('#success').content.querySelector('.success');
 
 
-let isSucces = '';
+let isSuccess = '';
 
 
 const pristine = new Pristine(imgUploadForm, {
@@ -63,7 +63,7 @@ const toggleSubmitButton = (disabled = false) => {
 };
 
 function closePopup () {
-  if (isSucces) {
+  if (isSuccess) {
     document.querySelector('.success__button').removeEventListener('click', oncloseButtonClick);
     document.querySelector('.success').remove();
   } else {
@@ -93,7 +93,7 @@ function oncloseButtonClick () {
 
 
 const showPopup = (template) => {
-  isSucces = (template === successTemplate);
+  isSuccess = (template === successTemplate);
   const clone = template.cloneNode(true);
   body.append(clone);
   const closeButton = clone.querySelector('[type="button"]');
@@ -103,7 +103,7 @@ const showPopup = (template) => {
   document.removeEventListener('keydown', onDocumentKeydown);
 };
 
-const setSubmiteForm = (onSuccess) => {
+const setSubmitForm = (onSuccess) => {
   imgUploadForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
     const isValid = pristine.validate();
@@ -161,17 +161,17 @@ function onDocumentKeydown (evt) {
 }
 
 
-const onChangeFileInput = () => {
+const onFileInputChange = () => {
   openImgSetting();
 };
 
-const onClickCancelButton = () => {
+const onCancelButtonClick = () => {
   closeImgSetting();
 };
 
 
-fileInput.addEventListener('change', onChangeFileInput);
-imgUploadCancelButton.addEventListener('click', onClickCancelButton);
+fileInput.addEventListener('change', onFileInputChange);
+imgUploadCancelButton.addEventListener('click', onCancelButtonClick);
 
-setSubmiteForm(closeImgSetting);
+setSubmitForm(closeImgSetting);
 
