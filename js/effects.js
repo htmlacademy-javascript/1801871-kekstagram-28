@@ -117,7 +117,7 @@ const onEffectListChange = (evt) => {
     updateSlider(currentSettings);
   }
 };
-const resetEfects = () => {
+const resetEffects = () => {
   preview.className = '';
   preview.style.filter = '';
   hideSlider();
@@ -126,4 +126,4 @@ const resetEfects = () => {
 effectsList.addEventListener('change', onEffectListChange);
 slider.noUiSlider.on('update', onSliderUpdate);
 
-export {resetEfects};
+export {resetEffects};

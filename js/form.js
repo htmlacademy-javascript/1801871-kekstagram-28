@@ -56,24 +56,12 @@ const validateHashtags = (value) => {
 };
 pristine.addValidator(hashtagField, validateHashtags, ERROR_TEXT);
 
-// const blockSubmitButton = () => {
-//   imgUploadFormButton.disabled = true;
-//   imgUploadFormButton.textContent = SubmitButtonText.LOADING;
-// };
 
-// const unBlockSubmitButton = () => {
-//   imgUploadFormButton.disabled = false;
-//   imgUploadFormButton.textContent = SubmitButtonText.POST;
-// };
-
-const toggelSubmitButton = (boolean = false) => {
-  imgUploadFormButton.disabled = boolean;
-  if(boolean) {
-    imgUploadFormButton.textContent = SubmitButtonText.LOADING;
-  }
-  imgUploadFormButton.textContent = SubmitButtonText.POST;
+const toggleSubmitButton = (disabled = false) => {
+  imgUploadFormButton.disabled = disabled;
+  imgUploadFormButton.textContent = disabled ? SubmitButtonText.LOADING : SubmitButtonText.POST;
 };
-// Можно ли в объекте клбючи переписать на true и false чтобы тут избежать проверок
+
 function closePopup () {
   if (isSucces) {
     document.querySelector('.success__button').removeEventListener('click', oncloseButtonClick);
@@ -120,13 +108,13 @@ const setSubmiteForm = (onSuccess) => {
     evt.preventDefault();
     const isValid = pristine.validate();
     if (isValid) {
-      toggelSubmitButton(true);
+      toggleSubmitButton(true);
       const data = new FormData(evt.target);
       sendData(data)
         .then(onSuccess)
         .then(() => (showPopup(successTemplate)))
         .catch(() => (showPopup(errorTemplate)))
-        .finally(toggelSubmitButton);
+        .finally(toggleSubmitButton);
     }
   });
 };
@@ -156,7 +144,7 @@ const closeImgSetting = () => {
   imgUploadForm.reset();
   clearScale();
   resetEfects();
-  toggelSubmitButton();
+  toggleSubmitButton();
 };
 
 
