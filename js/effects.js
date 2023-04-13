@@ -7,33 +7,29 @@ const DEFAULT_EFFECT = {
   max: 100,
 };
 
-const EFFECTS = [
-  {
-    name: 'chrome',
+const Effect = {
+  chrome: {
     min: 0,
     max: 1,
     step: 0.1,
     units: 'none',
     filter: 'grayscale',
   },
-  {
-    name: 'sepia',
+  sepia: {
     min: 0,
     max: 1,
     step: 0.1,
     units: 'none',
     filter:'sepia',
   },
-  {
-    name: 'marvin',
+  marvin: {
     min: 0,
     max: 100,
     step: 1,
     units: '%',
     filter:'invert',
   },
-  {
-    name: 'phobos',
+  phobos: {
     min: 0,
     max: 3,
     step: 0.1,
@@ -41,22 +37,21 @@ const EFFECTS = [
     filter: 'blur',
 
   },
-  {
-    name: 'heat',
+  heat: {
     min: 1,
     max: 3,
     step: 0.1,
     units: 'none',
     filter: 'brightness',
   },
-];
-
-let currentSettings = '';
+};
 
 const effectsList = document.querySelector('.effects__list');
 const slider = document.querySelector('.effect-level__slider');
 const sliderContainer = document.querySelector('.img-upload__effect-level');
 const sliderValue = document.querySelector('.effect-level__value');
+
+let currentSettings = '';
 
 const hideSlider = () => {
   sliderContainer.classList.add('hidden');
@@ -112,8 +107,8 @@ const onEffectListChange = (evt) => {
     hideSlider();
   } else {
     showSlider();
-    currentSettings = EFFECTS.find((element)=>(element.name === currentRadio.value));
-    preview.className = `effects__preview--${currentSettings.name}`;
+    currentSettings = Effect[currentRadio.value];
+    preview.className = `effects__preview--${currentRadio.value}`;
     updateSlider(currentSettings);
   }
 };
